@@ -7,7 +7,7 @@ else
 fi
 
 python -m data.extract_vision \
---data_path=/home/bhash/moca/moca/data/json_2.1.0/  \
+--data_path="${PATH_DIR}"/data/json_2.1.0/  \
 --type=alfred \
 --split_id=train  \
 --num_workers=4 \
