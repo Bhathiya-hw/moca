@@ -1,0 +1,7 @@
+/data/alfred_extract/
+/data/json_2.1.0/
+__pycache__/
+.idea/
+/data/ai_thor_sample/
+/exp/pretrained/
+*.pt

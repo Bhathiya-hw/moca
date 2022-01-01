@@ -74,6 +74,7 @@ def startx(display):
                 and r['Class'] in ['VGA compatible controller', '3D controller']:
             bus_id = 'PCI:' + ':'.join(map(lambda x: str(int(x, 16)), re.split(r'[:\.]', r['Slot'])))
             devices.append(bus_id)
+            print(devices)
 
     if not devices:
         raise Exception("no nvidia cards found")
@@ -82,6 +83,7 @@ def startx(display):
         fd, path = tempfile.mkstemp()
         with open(path, "w") as f:
             f.write(generate_xorg_conf(devices))
+        print(display)
         command = shlex.split("Xorg -noreset +extension GLX +extension RANDR +extension RENDER -config %s :%s" % (path, display))
         subprocess.call(command)
     finally:
@@ -90,7 +92,7 @@ def startx(display):
 
 
 if __name__ == '__main__':
-    display = 0
+    display = 1
     if len(sys.argv) > 1:
         display = int(sys.argv[1])
     print("Starting X on DISPLAY=:%s" % display)

@@ -69,7 +69,7 @@ class EvalTask(Eval):
 
         maskrcnn = maskrcnn_resnet50_fpn(num_classes=119)
         maskrcnn.eval()
-        maskrcnn.load_state_dict(torch.load('weight_maskrcnn.pt'))
+        maskrcnn.load_state_dict(torch.load('/home/bhash/moca/moca/weight_maskrcnn.pt'))
         maskrcnn = maskrcnn.cuda()
 
         prev_image = None
@@ -142,6 +142,7 @@ class EvalTask(Eval):
 
                     mask = np.squeeze(masks[0].numpy(), axis=0)
 
+            print(mask)
             # print action
             if args.debug:
                 print(action)
@@ -154,6 +155,9 @@ class EvalTask(Eval):
                 if fails >= args.max_fails:
                     print("Interact API failed %d times" % fails + "; latest error '%s'" % err)
                     break
+
+            if t%8 == 0:
+                curr_image.save('/home/bhash/moca/moca/data/ai_thor_sample/' + str(traj_data['task_id'] + "_" + str(t) + ".png"))
 
             # next time-step
             t_reward, t_done = env.get_transition_reward()
